@@ -11,6 +11,9 @@ import java.util.ArrayList;
 /**
  * Created by harshas on 12/25/2016.
  */
+/*
+Provides a handle to the database resource.
+ */
 public class ShoppingDbHelper{
     private static final String APPLOG = "Shop";
     Activity activity;
