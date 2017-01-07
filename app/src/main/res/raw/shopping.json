@@ -1,0 +1,27 @@
+{
+	"shops": [{
+		"sid": 1,
+		"title": "Amazon",
+		"bookmark": true,
+		"url": "www.amazon.in",
+	  	"icon": "amazon"
+	}, {
+		"sid": 2,
+		"title": "Flipkart",
+		"bookmark": true,
+		"url": "www.flipkart.com",
+	  	"icon": "flipkart"
+	}, {
+		"sid": 3,
+		"title": "Snapdeal",
+		"bookmark": false,
+		"url": "www.snapdeal.com",
+	  	"icon": "snapdeal"
+	}, {
+		"sid": 4,
+		"title": "Paytm",
+		"bookmark": true,
+		"url": "www.paytm.com",
+	  	"icon": "paytm"
+	}]
+}

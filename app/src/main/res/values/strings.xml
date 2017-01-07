@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Shopping Space</string>
+    <string name="app_tag_line">All your online shopping at one place</string>
+    <string name="title_activity_activity_web_view">WebView Tittle</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="title_activity_drawer">Dashboard</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_dashboard">Dashboard</string>
+    <string name="title_activity_all_shops">Top stores</string>
 </resources>
