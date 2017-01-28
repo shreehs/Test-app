@@ -15,4 +15,7 @@ public interface IShopsDao {
     public boolean insertShops(ArrayList<Shop> shops);
     // Delete
     public boolean deleteAllShops();
+    public int deleteShop(int sid);
+    //Update
+    public int updateShop(int sid,Shop shop);
 }
