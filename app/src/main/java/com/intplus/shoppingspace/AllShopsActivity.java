@@ -20,7 +20,7 @@ import com.intplus.shoppingspace.adapters.AllShopsListAdapter;
 import com.intplus.shoppingspace.adapters.DashboardGridAdapter;
 import com.intplus.shoppingspace.controller.AppController;
 import com.intplus.shoppingspace.controller.MainActivityController;
-import com.intplus.shoppingspace.helpers.Shop;
+import com.intplus.shoppingspace.model.Shop;
 
 import java.util.ArrayList;
 
@@ -31,6 +31,7 @@ public class AllShopsActivity extends AppCompatActivity
     // Data
     ArrayList<Shop> allShops = new ArrayList<>();
     // Others
+    private NavigationView navigationView;
     private RecyclerView rListview;
     private LinearLayoutManager linearLayoutManager;
     private AppController appController;
@@ -42,7 +43,7 @@ public class AllShopsActivity extends AppCompatActivity
         setContentView(R.layout.activity_all_shops);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -66,6 +67,7 @@ public class AllShopsActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        navigationView.setCheckedItem(R.id.nav_all_shops);
         // Get list of dashboard shops to display.
         allShops = appController.getDashboardShops();
         // pass dash board items to GridView.
@@ -120,9 +122,10 @@ public class AllShopsActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+            this.appController.launchAppOnPlayStore();
+        } else if (id == R.id.nav_help) {
+            this.appController.launchHelpActivity();
+        }else if (id == R.id.nav_about) {
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
