@@ -15,13 +15,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewStub;
 import android.widget.Button;
 
 import com.intplus.shoppingspace.adapters.DashboardGridAdapter;
 import com.intplus.shoppingspace.controller.AppController;
 import com.intplus.shoppingspace.controller.MainActivityController;
-import com.intplus.shoppingspace.helpers.Shop;
+import com.intplus.shoppingspace.model.Shop;
 import com.intplus.shoppingspace.model.AppPrefHelper;
 
 import java.util.ArrayList;

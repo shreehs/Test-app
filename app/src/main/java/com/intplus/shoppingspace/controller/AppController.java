@@ -2,7 +2,7 @@ package com.intplus.shoppingspace.controller;
 
 import android.app.Activity;
 
-import com.intplus.shoppingspace.helpers.Shop;
+import com.intplus.shoppingspace.model.Shop;
 import com.intplus.shoppingspace.model.ShoppingDbHelper;
 
 import java.util.ArrayList;

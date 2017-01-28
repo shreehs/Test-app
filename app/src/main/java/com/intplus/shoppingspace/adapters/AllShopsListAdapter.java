@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.intplus.shoppingspace.R;
 import com.intplus.shoppingspace.app.AppConstants;
-import com.intplus.shoppingspace.helpers.Shop;
+import com.intplus.shoppingspace.model.Shop;
 
 import java.util.ArrayList;
 
