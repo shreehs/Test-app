@@ -10,10 +10,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.intplus.shoppingspace.adapters.DashboardGridAdapter;
-import com.intplus.shoppingspace.adapters.TestGridAdapter;
 import com.intplus.shoppingspace.controller.AppController;
 import com.intplus.shoppingspace.controller.MainActivityController;
-import com.intplus.shoppingspace.helpers.Shop;
+import com.intplus.shoppingspace.model.Shop;
 import com.intplus.shoppingspace.model.AppPrefHelper;
 
 import java.util.ArrayList;

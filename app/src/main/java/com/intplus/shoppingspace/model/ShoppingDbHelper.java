@@ -1,10 +1,6 @@
 package com.intplus.shoppingspace.model;
 
 import android.app.Activity;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-
-import com.intplus.shoppingspace.helpers.Shop;
 
 import java.util.ArrayList;
 
