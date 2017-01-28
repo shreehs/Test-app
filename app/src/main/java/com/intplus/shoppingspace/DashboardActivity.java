@@ -6,7 +6,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,15 +21,13 @@ import android.widget.Button;
 import com.intplus.shoppingspace.adapters.DashboardGridAdapter;
 import com.intplus.shoppingspace.controller.AppController;
 import com.intplus.shoppingspace.controller.MainActivityController;
-import com.intplus.shoppingspace.model.Shop;
+import com.intplus.shoppingspace.helpers.Shop;
 import com.intplus.shoppingspace.model.AppPrefHelper;
 
 import java.util.ArrayList;
 
-import static com.intplus.shoppingspace.app.AppConstants.APPLOG;
-
 public class DashboardActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, DashboardGridAdapter.OnItemClickListner {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "Shop";
     // Model helpers.
@@ -40,7 +37,6 @@ public class DashboardActivity extends AppCompatActivity
     MainActivityController mainActivityController;
     // Others
     ArrayList<Shop> dashBoardShops;
-    NavigationView navigationView;
     Button btnGotoWebView;
     Button btnTest;
     Button btnGrid;
@@ -55,7 +51,14 @@ public class DashboardActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Goto all apps activity", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -68,16 +71,6 @@ public class DashboardActivity extends AppCompatActivity
 
         mainActivityController = new MainActivityController(this);
         appController = new AppController(this);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Snackbar.make(view, "Goto all apps activity", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            appController.launchAllShopsActivity();
-            }
-        });
-
         // Check and handle first run case.
         if (mainActivityController.isFirstRun()){
             mainActivityController.initialize();
@@ -105,7 +98,6 @@ public class DashboardActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        navigationView.setCheckedItem(R.id.nav_home);
         // Get list of dashboard shops to display.
         dashBoardShops = appController.getDashboardShops();
         // pass dash board items to GridView.
@@ -161,24 +153,13 @@ public class DashboardActivity extends AppCompatActivity
         } else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_share) {
-            this.appController.launchAppOnPlayStore();
-        } else if (id == R.id.nav_help) {
-            this.appController.launchHelpActivity();
+
         } else if (id == R.id.nav_about) {
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    @Override
-    public void onListItemClick(int position) {
-        int sid = this.dashBoardShops.get(position).sid;
-        System.out.println("Shop Dashboard click SID : "+sid);
-        // pass sid to web view activity.
-        Intent webViewIntent = new Intent(this, ActivityWebView.class);
-        webViewIntent.putExtra("sid", sid);
-        startActivity(webViewIntent);
     }
 }

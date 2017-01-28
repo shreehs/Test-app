@@ -1,13 +1,8 @@
 package com.intplus.shoppingspace.controller;
 
 import android.app.Activity;
-import android.content.Intent;
 
-import com.intplus.shoppingspace.AllShopsActivity;
-import com.intplus.shoppingspace.HelpActivity;
-import com.intplus.shoppingspace.app.AppConstants;
-import com.intplus.shoppingspace.commons.PlayStore;
-import com.intplus.shoppingspace.model.Shop;
+import com.intplus.shoppingspace.helpers.Shop;
 import com.intplus.shoppingspace.model.ShoppingDbHelper;
 
 import java.util.ArrayList;
@@ -40,36 +35,7 @@ public class AppController {
         Get the shop details from db.
         Create a Shop object and return.
          */
-        // Default shop is amazon.
-        Shop currentShop = new Shop(0, "Amazon", Boolean.TRUE, "http://www.amazon.in", "amazon");
-        // tmp hardcode
-        switch (sid) {
-            case 0 :
-                currentShop = new Shop(0, "Amazon", Boolean.TRUE, "http://www.amazon.in", "amazon");
-                break;
-            case 1 :
-                currentShop = new Shop(1, "Flipkart", Boolean.TRUE, "https://www.flipkart.com", "flipkart");
-                break;
-            case 2 :
-                currentShop = new Shop(2, "Snaldeal", Boolean.FALSE, "https://www.snapdeal.com", "snapdeal");
-                break;
-            case 3 :
-                currentShop = new Shop(3, "Paytm", Boolean.TRUE, "https://www.paytm.com", "myntra");
-                break;
-        }
+        Shop currentShop = new Shop();
         return currentShop;
-    }
-
-    public void launchAppOnPlayStore(){
-        PlayStore playStore = new PlayStore();
-        playStore.gotoPlayStore(AppConstants.PACKAGE, this.activity);
-    }
-    public void launchHelpActivity(){
-        Intent helpIntent = new Intent(this.activity, HelpActivity.class);
-        this.activity.startActivity(helpIntent);
-    }
-    public void launchAllShopsActivity(){
-        Intent helpIntent = new Intent(this.activity, AllShopsActivity.class);
-        this.activity.startActivity(helpIntent);
     }
 }

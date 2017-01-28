@@ -32,8 +32,7 @@
         <activity
             android:name=".AllShopsActivity"
             android:label="@string/title_activity_all_shops"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".HelpActivity"></activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

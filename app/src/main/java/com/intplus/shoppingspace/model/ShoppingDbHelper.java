@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.intplus.shoppingspace.model.Shop;
+import com.intplus.shoppingspace.helpers.Shop;
 
 import java.util.ArrayList;
 
@@ -25,10 +25,10 @@ public class ShoppingDbHelper{
     // getters.
     public ArrayList<Shop> getAllShops(){
         ArrayList<Shop> allShops = new ArrayList<>();
-        allShops.add(new Shop(0, "Amazon", Boolean.TRUE, "www.amazon.in", "amazon"));
-        allShops.add(new Shop(1, "Flipkart", Boolean.TRUE, "www.flipkart.com", "flipkart"));
-        allShops.add(new Shop(2, "Snaldeal", Boolean.FALSE, "www.snapdeal.com", "snapdeal"));
-        allShops.add(new Shop(3, "Paytm", Boolean.TRUE, "www.paytm.com", "myntra"));
+        allShops.add(new Shop(1, "Amazon", Boolean.TRUE, "www.amazon.in", "amazon"));
+        allShops.add(new Shop(2, "Flipkart", Boolean.TRUE, "www.flipkart.com", "flipkart"));
+        allShops.add(new Shop(3, "Snaldeal", Boolean.FALSE, "www.snapdeal.com", "snapdeal"));
+        allShops.add(new Shop(4, "Paytm", Boolean.TRUE, "www.paytm.com", "myntra"));
         return allShops;
     }
 }
