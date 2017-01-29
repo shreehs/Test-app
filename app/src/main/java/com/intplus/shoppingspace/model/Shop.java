@@ -24,6 +24,46 @@ public class Shop {
     public Shop(){
     }
 
+    public int getSid() {
+        return sid;
+    }
+
+    public void setSid(int sid) {
+        this.sid = sid;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
+    public Boolean getBookmark() {
+        return bookmark;
+    }
+
+    public void setBookmark(Boolean bookmark) {
+        this.bookmark = bookmark;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
     public Shop(int sid, String shopName, Boolean bookmark, String url, String icon){
         this.sid = sid;
         this.shopName = shopName;
