@@ -7,7 +7,20 @@
     android:fitsSystemWindows="true"
     tools:context="com.intplus.shoppingspace.ActivityWebView">
 
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedscroll_web"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <!-- Your scrolling content -->
+        <include
+            layout="@layout/content_activity_web_view" />
+
+    </android.support.v4.widget.NestedScrollView>
+
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -17,10 +30,9 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
-
-    <include layout="@layout/content_activity_web_view" />
 
 </android.support.design.widget.CoordinatorLayout>
