@@ -26,7 +26,8 @@ import com.intplus.shoppingspace.model.AppPrefHelper;
 import java.util.ArrayList;
 
 public class DashboardActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+            DashboardGridAdapter.OnItemClickListner{
 
     private static final String TAG = "Shop";
     // Model helpers.
@@ -42,6 +43,7 @@ public class DashboardActivity extends AppCompatActivity
     RecyclerView rGridview;
     GridLayoutManager gridLayoutManager;
     DashboardGridAdapter dashboardGridAdapter;
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +52,14 @@ public class DashboardActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Goto all apps activity", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "Goto all apps activity", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                appController.launchAllShopsActivity();
             }
         });
 
@@ -97,6 +101,7 @@ public class DashboardActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        navigationView.setCheckedItem(R.id.nav_home);
         // Get list of dashboard shops to display.
         dashBoardShops = appController.getDashboardShops();
         // pass dash board items to GridView.
@@ -152,13 +157,24 @@ public class DashboardActivity extends AppCompatActivity
         } else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_share) {
-
+            this.appController.launchAppOnPlayStore();
+        } else if (id == R.id.nav_help) {
+            this.appController.launchHelpActivity();
         } else if (id == R.id.nav_about) {
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onListItemClick(int position) {
+        int sid = this.dashBoardShops.get(position).sid;
+        System.out.println("Shop Dashboard click SID : "+sid);
+        // pass sid to web view activity.
+        Intent webViewIntent = new Intent(this, ActivityWebView.class);
+        webViewIntent.putExtra("sid", sid);
+        startActivity(webViewIntent);
     }
 }
