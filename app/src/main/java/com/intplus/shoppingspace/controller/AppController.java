@@ -2,12 +2,14 @@ package com.intplus.shoppingspace.controller;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 
 import com.intplus.shoppingspace.AllShopsActivity;
 import com.intplus.shoppingspace.HelpActivity;
 import com.intplus.shoppingspace.app.AppConstants;
 import com.intplus.shoppingspace.commons.PlayStore;
 import com.intplus.shoppingspace.model.Shop;
+import com.intplus.shoppingspace.model.ShopDatabase;
 import com.intplus.shoppingspace.model.ShoppingDbHelper;
 
 import java.util.ArrayList;
@@ -19,7 +21,8 @@ public class AppController {
 
     private Activity activity;
     private ShoppingDbHelper shoppingDbHelper;
-
+    public static ShopDatabase shopDatabase;
+    private static final String APPLOG = "Shop";
     public AppController(Activity activity){
         this.activity = activity;
         this.shoppingDbHelper = new ShoppingDbHelper(this.activity);
@@ -41,7 +44,7 @@ public class AppController {
         Create a Shop object and return.
          */
         // Default shop is amazon.
-        Shop currentShop = new Shop(0, "Amazon", Boolean.TRUE, "http://www.amazon.in", "amazon");
+       /* Shop currentShop = new Shop(0, "Amazon", Boolean.TRUE, "http://www.amazon.in", "amazon");
         // tmp hardcode
         switch (sid) {
             case 0 :
@@ -56,10 +59,25 @@ public class AppController {
             case 3 :
                 currentShop = new Shop(3, "Paytm", Boolean.TRUE, "https://www.paytm.com", "myntra");
                 break;
-        }
+        }*/
+       Shop currentShop=null;
+try
+{
+    shopDatabase=new ShopDatabase(this.activity);
+    shopDatabase.open();
+   currentShop=shopDatabase.shopsDao.fetchShopBySid(sid);
+    Log.d("APPsds",currentShop.getShopName());
+}
+catch (Exception e)
+{
+Log.e(APPLOG,"Shop with given id:"+sid+"is not found");
+}
+  finally {
+    shopDatabase.close();
+    Log.e(APPLOG,"Db is closed");
+  }
         return currentShop;
     }
-
     public void launchAppOnPlayStore(){
         PlayStore playStore = new PlayStore();
         playStore.gotoPlayStore(AppConstants.PACKAGE, this.activity);

@@ -1,6 +1,8 @@
 package com.intplus.shoppingspace;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -34,12 +36,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     GridLayoutManager gridLayoutManager;
     DashboardGridAdapter dashboardGridAdapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mainActivityController = new MainActivityController(this);
         appController = new AppController(this);
+        /**
+         * Checks if the user is opening the app for the first time.
+         * Note that this method should be placed inside an activity and it can be called multiple times.
+         * @return boolean
+         */
         // Check and handle first run case.
         if (mainActivityController.isFirstRun()){
             mainActivityController.initialize();
@@ -48,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (mainActivityController.isChangeOfVersion()){
             mainActivityController.handleVersionChange();
         }
+
 
         btnGotoWebView = (Button) this.findViewById(R.id.btn_web_view);
         btnGotoWebView.setOnClickListener(this);
