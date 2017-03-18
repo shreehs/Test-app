@@ -29,7 +29,7 @@ import static com.intplus.shoppingspace.app.AppConstants.APPLOG;
 public class ActivityWebView extends AppCompatActivity implements ObservableScrollViewCallbacks {
 
     ObservableWebView myWebView;
-    int sid=0;
+    int sid=1;
     AppController appController;
     Shop thisShop;
     String url = "http://www.amazon.in";

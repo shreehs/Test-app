@@ -30,10 +30,10 @@ public class ShopsDao extends DbContentProvider implements IShopsDao,IShopSchema
     @Override
     public Shop fetchShopBySid(int sid) {
         final String selectionArgs[] = { String.valueOf(sid) };
-        final String selection =IShopSchema.COLUMN_S_ID+" = ?";
+        final String selection =IShopSchema.COLUMN_SHOP_ID+" = ?";
         Shop shop = new Shop();
         cursor = super.query(SHOP_TABLE, SHOP_COLUMNS, selection,
-                selectionArgs, COLUMN_S_ID);
+                selectionArgs, COLUMN_SHOP_ID);
         if (cursor != null) {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
@@ -52,7 +52,7 @@ public class ShopsDao extends DbContentProvider implements IShopsDao,IShopSchema
 
         ArrayList<Shop> shopList = new ArrayList<Shop>();
         cursor = super.query(SHOP_TABLE, SHOP_COLUMNS, null,
-                null, COLUMN_S_ID);
+                null, COLUMN_SHOP_ID);
 
         if (cursor != null) {
             cursor.moveToFirst();
@@ -87,7 +87,13 @@ public class ShopsDao extends DbContentProvider implements IShopsDao,IShopSchema
 
         for(int i=0;i<shops.size();i++)
         {
+            Log.println(Log.ASSERT,"daadd","shops:"+shops.get(i).getSid());
+            //shops.get(i).getSid();
             setContentValue(shops.get(i));
+            Log.println(Log.ASSERT,"daadd","shops:"+shops.get(i).getUrl());
+            Log.println(Log.ASSERT,"daadd","shops:"+shops.get(i).getIcon());
+            Log.println(Log.ASSERT,"daadd","shops:"+shops.get(i).getShopName());
+            Log.println(Log.ASSERT,"daadd","shops:"+shops.get(i).getBookmark());
         }
 
         try {
@@ -102,7 +108,7 @@ public class ShopsDao extends DbContentProvider implements IShopsDao,IShopSchema
     public int deleteShop(int sid)
     {
         final String selectionArgs[] = { String.valueOf(sid) };
-        final String selection =IShopSchema.COLUMN_S_ID+" = ?";
+        final String selection =IShopSchema.COLUMN_SHOP_ID+" = ?";
         int deletedRows = super.delete(SHOP_TABLE, selection,selectionArgs);
         return deletedRows;
     }
@@ -132,12 +138,12 @@ public class ShopsDao extends DbContentProvider implements IShopsDao,IShopSchema
         //String tableName, ContentValues values,String selection, String[] selectionArgs
         ContentValues contentValues=new ContentValues();
         contentValues.put(COLUMN_SHOP_NAME,shop.getShopName());
-        contentValues.put(COLUMN_BOOKMARK,shop.getBookmark());
-        contentValues.put(COLUMN_URL,shop.getUrl());
-        contentValues.put(COLUMN_IMG_NAME,shop.getIcon());
+        contentValues.put(COLUMN_SHOP_BOOKMARK,shop.getBookmark());
+        contentValues.put(COLUMN_SHOP_URL,shop.getUrl());
+        contentValues.put(COLUMN_SHOP_ICON,shop.getIcon());
 
         final String selectionArgs[] = { String.valueOf(sid) };
-        final String selection =IShopSchema.COLUMN_S_ID+" = ?";
+        final String selection =IShopSchema.COLUMN_SHOP_ID+" = ?";
         int noOfRowsUpdated=super.update(SHOP_TABLE,contentValues,selection,selectionArgs);
         return noOfRowsUpdated;
     }
@@ -155,8 +161,8 @@ public class ShopsDao extends DbContentProvider implements IShopsDao,IShopSchema
         int iconIndex;
 
         if (cursor != null) {
-            if (cursor.getColumnIndex(COLUMN_S_ID) != -1) {
-                sidIndex = cursor.getColumnIndexOrThrow(COLUMN_S_ID);
+            if (cursor.getColumnIndex(COLUMN_SHOP_ID) != -1) {
+                sidIndex = cursor.getColumnIndexOrThrow(COLUMN_SHOP_ID);
                 shop.sid = cursor.getInt(sidIndex);
             }
             if (cursor.getColumnIndex(COLUMN_SHOP_NAME) != -1) {
@@ -164,21 +170,21 @@ public class ShopsDao extends DbContentProvider implements IShopsDao,IShopSchema
                         COLUMN_SHOP_NAME);
                 shop.shopName = cursor.getString(shopNameIndex);
             }
-            if (cursor.getColumnIndex(COLUMN_BOOKMARK) != -1) {
+            if (cursor.getColumnIndex(COLUMN_SHOP_BOOKMARK) != -1) {
                 bookmarkIndex = cursor.getColumnIndexOrThrow(
-                        COLUMN_BOOKMARK);
+                        COLUMN_SHOP_BOOKMARK);
                 shop.bookmark = cursor.isNull(bookmarkIndex);
             }
 
-            if (cursor.getColumnIndex(COLUMN_URL) != -1) {
+            if (cursor.getColumnIndex(COLUMN_SHOP_URL) != -1) {
                 urlIndex = cursor.getColumnIndexOrThrow(
-                        COLUMN_URL);
+                        COLUMN_SHOP_URL);
                 shop.url = cursor.getString(urlIndex);
             }
 
-            if (cursor.getColumnIndex(COLUMN_SHOP_NAME) != -1) {
+            if (cursor.getColumnIndex(COLUMN_SHOP_ICON) != -1) {
                 iconIndex = cursor.getColumnIndexOrThrow(
-                        COLUMN_SHOP_NAME);
+                        COLUMN_SHOP_ICON);
                 shop.icon = cursor.getString(iconIndex);
             }
         }
@@ -188,11 +194,11 @@ public class ShopsDao extends DbContentProvider implements IShopsDao,IShopSchema
     //Setting all values to shop object.
     private void setContentValue(Shop shop) {
         initialValues = new ContentValues();
-        initialValues.put(COLUMN_S_ID, shop.sid);
+        initialValues.put(COLUMN_SHOP_ID, shop.sid);
         initialValues.put(COLUMN_SHOP_NAME, shop.shopName);
-        initialValues.put(COLUMN_BOOKMARK, shop.bookmark);
-        initialValues.put(COLUMN_URL, shop.url);
-        initialValues.put(COLUMN_IMG_NAME, shop.icon);
+        initialValues.put(COLUMN_SHOP_BOOKMARK, shop.bookmark);
+        initialValues.put(COLUMN_SHOP_URL, shop.url);
+        initialValues.put(COLUMN_SHOP_ICON, shop.icon);
     }
 
     //Returning content values.
