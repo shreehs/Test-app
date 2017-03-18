@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import com.intplus.shoppingspace.MainActivity;
 import com.intplus.shoppingspace.commons.CommonUtils;
 import com.intplus.shoppingspace.commons.JSONResourceReader;
 import com.intplus.shoppingspace.model.Shop;
@@ -18,13 +17,15 @@ import java.util.ArrayList;
 /**
  * Created by harshas on 12/18/2016.
  */
-public class MainActivityController extends AppCompatActivity{
+public class DashboardController extends AppController{
     private static final String APPLOG = "Shop";
     Activity activity;
     SharedPreferences settings=null;
     public static ShopDatabase shopDatabase;
     public CommonUtils utils;
-    public MainActivityController(Activity activity){
+
+    public DashboardController(Activity activity){
+        super(activity);
         this.activity = activity;
     }
 
@@ -32,7 +33,7 @@ public class MainActivityController extends AppCompatActivity{
     {
         Boolean firstTime=true;
         if (firstTime == true) {
-            SharedPreferences mPreferences = this.getSharedPreferences("first_time", Context.MODE_PRIVATE);
+            SharedPreferences mPreferences = this.activity.getSharedPreferences("first_time", Context.MODE_PRIVATE);
             firstTime = mPreferences.getBoolean("firstTime", true);
             //int i=mPreferences.getInt("firstrun",0);
             if (firstTime) {
@@ -40,10 +41,6 @@ public class MainActivityController extends AppCompatActivity{
                 editor.putBoolean("firstTime", false);
                 editor.commit();
                 //i=1;
-            }
-            else
-            {
-                firstTime=mPreferences.getBoolean("firstTime",false);
             }
         }
         return firstTime;
@@ -64,7 +61,7 @@ public class MainActivityController extends AppCompatActivity{
             String  shopsJSON = jsonResourceReader.readJSONFile(jsonFileResourceId);
             utils=new CommonUtils();
             ArrayList<Shop> shopsList= utils.getShopJsonParseOfShop(shopsJSON);
-            MainActivity activity=new MainActivity();
+            //MainActivity activity=new MainActivity();
             if(isFirstRun()==true)
             {
                 boolean shopsInsertedFlag=shopDatabase.shopsDao.insertShops(shopsList);

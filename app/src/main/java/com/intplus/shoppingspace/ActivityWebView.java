@@ -38,7 +38,7 @@ public class ActivityWebView extends AppCompatActivity {
     int sid=1;
     AppController appController;
     Shop thisShop;
-    String url = "http://www.amazon.in";
+    String url = "https://www.snapdeal.com/";
     Toolbar toolbar;
     AppBarLayout appBarLayout;
     AppBarLayout.LayoutParams params;
@@ -74,8 +74,8 @@ public class ActivityWebView extends AppCompatActivity {
         appController = new AppController(this);
         Intent mIntent = getIntent();
         sid = mIntent.getIntExtra("sid", 0);
-        thisShop = appController.getShopById(sid);
-        url = thisShop.url;
+        //thisShop = appController.getShopById(sid);
+        //url = thisShop.url;
 
         myWebView = (WebView) this.findViewById(R.id.webview);
         myWebView.setWebViewClient(new WebViewClient() {
@@ -89,7 +89,7 @@ public class ActivityWebView extends AppCompatActivity {
                     AlertDialog certAlertDialog = getCertAlertDialog(handler);
                     if (!certAlertDialog.isShowing()) {
                         certAlertDialog.show();
-                        System.out.println("Show new alert dialog.");
+                        Log.d(APPLOG, "Show a fresh alert dialog.");
                     }
                 }
             }
@@ -135,11 +135,11 @@ public class ActivityWebView extends AppCompatActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
         // set title
-        alertDialogBuilder.setTitle("Your Title");
+        alertDialogBuilder.setTitle("SSL Certificate error");
 
         // set dialog message
         alertDialogBuilder
-                .setMessage("Click yes to exit!")
+                .setMessage("The website delivered an invalid certificate. Would you like to continue ?")
                 //.setCancelable(false)
                 .setView(checkBoxView)
                 .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
@@ -153,7 +153,7 @@ public class ActivityWebView extends AppCompatActivity {
                 .setNegativeButton("No",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {
                         System.out.println("Negative click");
-                        dialog.cancel();
+                        //dialog.cancel();
                     }
                 });
 
