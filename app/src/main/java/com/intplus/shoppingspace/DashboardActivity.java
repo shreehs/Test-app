@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,11 +20,13 @@ import android.widget.Button;
 
 import com.intplus.shoppingspace.adapters.DashboardGridAdapter;
 import com.intplus.shoppingspace.controller.AppController;
-import com.intplus.shoppingspace.controller.MainActivityController;
+import com.intplus.shoppingspace.controller.DashboardController;
 import com.intplus.shoppingspace.model.Shop;
 import com.intplus.shoppingspace.model.AppPrefHelper;
 
 import java.util.ArrayList;
+
+import static com.intplus.shoppingspace.app.AppConstants.APPLOG;
 
 public class DashboardActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -34,7 +37,7 @@ public class DashboardActivity extends AppCompatActivity
     AppPrefHelper appPrefHelper;
     // Controllers
     AppController appController;
-    MainActivityController mainActivityController;
+    DashboardController dashboardController;
     // Others
     ArrayList<Shop> dashBoardShops;
     Button btnGotoWebView;
@@ -72,15 +75,17 @@ public class DashboardActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mainActivityController = new MainActivityController(this);
+        dashboardController = new DashboardController(this);
         appController = new AppController(this);
         // Check and handle first run case.
-        if (mainActivityController.isFirstRun()){
-            mainActivityController.initialize();
+        if (dashboardController.isFirstRun()){
+            Log.d(APPLOG, "It is first run, initializing.. ");
+            dashboardController.initialize();
         }
         // Check and handle app upgrade. Change of version.
-        if (mainActivityController.isChangeOfVersion()){
-            mainActivityController.handleVersionChange();
+        if (dashboardController.isChangeOfVersion()){
+            Log.d(APPLOG, "It is a change of version, initializing.. ");
+            dashboardController.handleVersionChange();
         }
 
         // Launch the view stub.

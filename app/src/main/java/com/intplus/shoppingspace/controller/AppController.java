@@ -23,6 +23,7 @@ public class AppController {
     private ShoppingDbHelper shoppingDbHelper;
     public static ShopDatabase shopDatabase;
     private static final String APPLOG = "Shop";
+
     public AppController(Activity activity){
         this.activity = activity;
         this.shoppingDbHelper = new ShoppingDbHelper(this.activity);
