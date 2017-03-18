@@ -1,6 +1,9 @@
 package com.intplus.shoppingspace;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -8,15 +11,18 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.CheckBox;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ObservableWebView;
@@ -26,19 +32,25 @@ import com.intplus.shoppingspace.model.Shop;
 
 import static com.intplus.shoppingspace.app.AppConstants.APPLOG;
 
-public class ActivityWebView extends AppCompatActivity implements ObservableScrollViewCallbacks {
+public class ActivityWebView extends AppCompatActivity {
 
-    ObservableWebView myWebView;
+    WebView myWebView;
     int sid=1;
     AppController appController;
     Shop thisShop;
     String url = "http://www.amazon.in";
     Toolbar toolbar;
-    NestedScrollView nestedScrollWeb;
     AppBarLayout appBarLayout;
     AppBarLayout.LayoutParams params;
-    int toolbarHeight;
-    int oldScrollY = 0;
+
+    AlertDialog alertDialog;
+    private static final String SPK_IGNORE_SSL = "ignore_ssl";
+    SharedPreferences webPref;
+    SharedPreferences.Editor webPrefEditor;
+
+    // View objects.
+    View checkBoxView;
+    CheckBox cbSslOption;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +59,17 @@ public class ActivityWebView extends AppCompatActivity implements ObservableScro
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         appBarLayout = (AppBarLayout) findViewById(R.id.toolbar_layout);
-        toolbarHeight = getActionBarHeight();
+        //toolbarHeight = getActionBarHeight();
 
         params = (AppBarLayout.LayoutParams) toolbar.getLayoutParams();
         // params.setScrollFlags(0);  // clear all scroll flags
+
+        webPref = getApplicationContext().getSharedPreferences("WebPref", 0);
+        webPrefEditor = webPref.edit();
+
+        checkBoxView = View.inflate(this, R.layout.util_checkbox, null);
+        cbSslOption = (CheckBox) checkBoxView.findViewById(R.id.cb_remember);
+        cbSslOption.setChecked(true);
 
         appController = new AppController(this);
         Intent mIntent = getIntent();
@@ -58,11 +77,23 @@ public class ActivityWebView extends AppCompatActivity implements ObservableScro
         thisShop = appController.getShopById(sid);
         url = thisShop.url;
 
-        myWebView = (ObservableWebView) this.findViewById(R.id.webview);
-        myWebView.setScrollViewCallbacks(this);
-        myWebView.setWebViewClient(new WebViewClient());
-
-        myWebView.setWebChromeClient(new WebChromeClient());
+        myWebView = (WebView) this.findViewById(R.id.webview);
+        myWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                //super.onReceivedSslError(view, handler, error);
+                if (webPref.getBoolean(SPK_IGNORE_SSL, false)){
+                    handler.proceed();
+                }
+                else {
+                    AlertDialog certAlertDialog = getCertAlertDialog(handler);
+                    if (!certAlertDialog.isShowing()) {
+                        certAlertDialog.show();
+                        System.out.println("Show new alert dialog.");
+                    }
+                }
+            }
+        });
         WebSettings settings = myWebView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setLoadsImagesAutomatically(true);
@@ -71,13 +102,6 @@ public class ActivityWebView extends AppCompatActivity implements ObservableScro
 
         Log.d(APPLOG, "url : "+url);
         myWebView.loadUrl(url);
-        myWebView.postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                myWebView.loadUrl(url);
-            }
-        }, 1500);
     }
 
     @Override
@@ -103,68 +127,39 @@ public class ActivityWebView extends AppCompatActivity implements ObservableScro
         return actionBarHeight;
     }
 
-    @Override
-    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-        Log.d(APPLOG, "onScrollChanged");
+    public AlertDialog getCertAlertDialog(final SslErrorHandler handler) {
 
-        // appBarLayout.animate().cancel();
-        // params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL);
-
-        int scrollDelta = scrollY - oldScrollY;
-        oldScrollY = scrollY;
-        System.out.println("Shop scroll Delta : "+scrollDelta);
-
-        float currentYTranslation = -appBarLayout.getTranslationY();
-        float targetYTranslation = Math.min(Math.max(currentYTranslation + scrollDelta, 0), toolbarHeight);
-        appBarLayout.setTranslationY(-targetYTranslation);
-
-    }
-
-    @Override
-    public void onDownMotionEvent() {
-        Log.d(APPLOG, "onDownmotionEvent");
-    }
-
-    @Override
-    public void onUpOrCancelMotionEvent(ScrollState scrollState) {
-        Log.d(APPLOG, "onUpOrCancel");
-        /*
-        ActionBar ab = getSupportActionBar();
-        if (ab == null) {
-            return;
+        if (alertDialog != null) {
+            return alertDialog;
         }
-        if (scrollState == ScrollState.UP) {
-            if (ab.isShowing()) {
-                ab.hide();
-            }
-        } else if (scrollState == ScrollState.DOWN) {
-            if (!ab.isShowing()) {
-                ab.show();
-            }
-        }
-        */
-        ActionBar ab = getSupportActionBar();
-        float currentYTranslation = -appBarLayout.getTranslationY();
-        //int currentScroll = myWebView.getCurrentScrollY();
-        int currentScroll = appBarLayout.getTotalScrollRange();
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
-        System.out.println("Shop AppBarL Height : "+appBarLayout.getTotalScrollRange());
-        System.out.println("Shop current Scroll : "+currentScroll);
+        // set title
+        alertDialogBuilder.setTitle("Your Title");
 
-        if (currentScroll < toolbarHeight) {
-            // appBarLayout.animate().translationY(0);
-            Log.d(APPLOG,"Show1");
-            appBarLayout.setExpanded(true, true);
-        } else if (currentYTranslation > toolbarHeight /2) {
-            // appBarLayout.animate().translationY(-toolbarHeight);
-            Log.d(APPLOG,"Collaps");
-            appBarLayout.setExpanded(false, true);
-        } else {
-            // appBarLayout.animate().translationY(0);
-            Log.d(APPLOG,"show2");
-            appBarLayout.setExpanded(true, true);
-        }
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("Click yes to exit!")
+                //.setCancelable(false)
+                .setView(checkBoxView)
+                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        System.out.println("Positive click");
+                        webPrefEditor.putBoolean(SPK_IGNORE_SSL, cbSslOption.isChecked());
+                        webPrefEditor.commit();
+                        handler.proceed();
+                    }
+                })
+                .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        System.out.println("Negative click");
+                        dialog.cancel();
+                    }
+                });
 
+        // create alert dialog
+        alertDialog = alertDialogBuilder.create();
+        return alertDialog;
     }
 }
 
