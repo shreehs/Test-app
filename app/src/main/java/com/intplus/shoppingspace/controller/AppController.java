@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.intplus.shoppingspace.AllShopsActivity;
+import com.intplus.shoppingspace.DashboardActivity;
 import com.intplus.shoppingspace.HelpActivity;
 import com.intplus.shoppingspace.app.AppConstants;
 import com.intplus.shoppingspace.commons.PlayStore;
@@ -29,10 +30,16 @@ public class AppController {
         this.shoppingDbHelper = new ShoppingDbHelper(this.activity);
     }
 
+    public ArrayList<Shop> getAllShops(){
+        ArrayList<Shop> allShops = this.shoppingDbHelper.getAllShops();
+        return allShops;
+    }
+
     public ArrayList<Shop> getDashboardShops(){
         ArrayList<Shop> dashboardItems = new ArrayList<>();
-        ArrayList<Shop> allShops = this.shoppingDbHelper.getAllShops();
+        ArrayList<Shop> allShops = this.getAllShops();
         for(int i=0; i<allShops.size(); i++){
+            // Check if it is bookmarked shop. Add to dashboard list.
             dashboardItems.add(allShops.get(i));
         }
         // Or use filtering query to read selected from db. (check)
@@ -40,26 +47,30 @@ public class AppController {
     }
 
     public Shop getShopById(int sid){
-       Shop currentShop=null;
-try
-{
-    shopDatabase=new ShopDatabase(this.activity);
-    shopDatabase.open();
-   currentShop=shopDatabase.shopsDao.fetchShopBySid(sid);
-}
-catch (Exception e)
-{
-Log.e(APPLOG,"Shop with given id:"+sid+"is not found");
-}
-  finally {
-    shopDatabase.close();
-    Log.e(APPLOG,"Db is closed");
-  }
+        Shop currentShop=null;
+        try {
+            shopDatabase=new ShopDatabase(this.activity);
+            shopDatabase.open();
+            currentShop=shopDatabase.shopsDao.fetchShopBySid(sid);
+        }
+        catch (Exception e) {
+            Log.e(APPLOG,"Shop with given id:"+sid+"is not found");
+        }
+        finally {
+            shopDatabase.close();
+            Log.e(APPLOG,"Db is closed");
+        }
         return currentShop;
     }
+
+    // new screen launchers.
     public void launchAppOnPlayStore(){
         PlayStore playStore = new PlayStore();
         playStore.gotoPlayStore(AppConstants.PACKAGE, this.activity);
+    }
+    public void launchDashboardActivity(){
+        Intent dashIntent = new Intent(this.activity, DashboardActivity.class);
+        this.activity.startActivity(dashIntent);
     }
     public void launchHelpActivity(){
         Intent helpIntent = new Intent(this.activity, HelpActivity.class);
