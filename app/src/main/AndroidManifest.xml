@@ -13,7 +13,12 @@
         <activity
             android:name=".ActivityWebView"
             android:label="@string/title_activity_activity_web_view"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.intplus.shoppingspace.DashboardActivity" />
+        </activity>
         <activity
             android:name=".TestActivity"
             android:label="@string/title_activity_test"
