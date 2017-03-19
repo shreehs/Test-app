@@ -40,34 +40,12 @@ public class AppController {
     }
 
     public Shop getShopById(int sid){
-        /*
-        Get the shop details from db.
-        Create a Shop object and return.
-         */
-        // Default shop is amazon.
-       /* Shop currentShop = new Shop(0, "Amazon", Boolean.TRUE, "http://www.amazon.in", "amazon");
-        // tmp hardcode
-        switch (sid) {
-            case 0 :
-                currentShop = new Shop(0, "Amazon", Boolean.TRUE, "http://www.amazon.in", "amazon");
-                break;
-            case 1 :
-                currentShop = new Shop(1, "Flipkart", Boolean.TRUE, "https://www.flipkart.com", "flipkart");
-                break;
-            case 2 :
-                currentShop = new Shop(2, "Snaldeal", Boolean.FALSE, "https://www.snapdeal.com", "snapdeal");
-                break;
-            case 3 :
-                currentShop = new Shop(3, "Paytm", Boolean.TRUE, "https://www.paytm.com", "myntra");
-                break;
-        }*/
        Shop currentShop=null;
 try
 {
     shopDatabase=new ShopDatabase(this.activity);
     shopDatabase.open();
    currentShop=shopDatabase.shopsDao.fetchShopBySid(sid);
-    Log.d("APPsds",currentShop.getShopName());
 }
 catch (Exception e)
 {

@@ -35,12 +35,10 @@ public class DashboardController extends AppController{
         if (firstTime == true) {
             SharedPreferences mPreferences = this.activity.getSharedPreferences("first_time", Context.MODE_PRIVATE);
             firstTime = mPreferences.getBoolean("firstTime", true);
-            //int i=mPreferences.getInt("firstrun",0);
             if (firstTime) {
                 SharedPreferences.Editor editor = mPreferences.edit();
                 editor.putBoolean("firstTime", false);
                 editor.commit();
-                //i=1;
             }
         }
         return firstTime;
@@ -53,7 +51,6 @@ public class DashboardController extends AppController{
          */
         shopDatabase=new ShopDatabase(this.activity);
         shopDatabase.open();
-        //String shopsJSON = "";
         JSONResourceReader jsonResourceReader = new JSONResourceReader(this.activity);
         int jsonFileResourceId = this.activity.getResources()
                         .getIdentifier("shopping", "raw", this.activity.getPackageName());
@@ -61,19 +58,19 @@ public class DashboardController extends AppController{
             String  shopsJSON = jsonResourceReader.readJSONFile(jsonFileResourceId);
             utils=new CommonUtils();
             ArrayList<Shop> shopsList= utils.getShopJsonParseOfShop(shopsJSON);
-            //MainActivity activity=new MainActivity();
-            if(isFirstRun()==true)
+       boolean shopsInsertedFlag=false;
+            for(Shop shop:shopsList)
             {
-                boolean shopsInsertedFlag=shopDatabase.shopsDao.insertShops(shopsList);
+                 shopsInsertedFlag=shopDatabase.shopsDao.insertShop(shop);
+            }
                 if(shopsInsertedFlag==true)
                 {
                     Log.d(APPLOG,"Shops are inserted into database during first run.");
                 }
-            }
-            else
-            {
-                Log.e(APPLOG,"Shops are already inserted into database.");
-            }
+                else
+                {
+                    Log.d(APPLOG,"Shops are not inserted into database.");
+                }
 
         }catch (UnsupportedEncodingException erUnEn){
             Log.e(APPLOG, " json encoding Exception");

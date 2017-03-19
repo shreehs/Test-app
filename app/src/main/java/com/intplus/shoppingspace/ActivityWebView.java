@@ -35,7 +35,7 @@ import static com.intplus.shoppingspace.app.AppConstants.APPLOG;
 public class ActivityWebView extends AppCompatActivity {
 
     WebView myWebView;
-    int sid=1;
+    int sid=0;
     AppController appController;
     Shop thisShop;
     String url = "https://www.snapdeal.com/";
@@ -74,14 +74,13 @@ public class ActivityWebView extends AppCompatActivity {
         appController = new AppController(this);
         Intent mIntent = getIntent();
         sid = mIntent.getIntExtra("sid", 0);
-        //thisShop = appController.getShopById(sid);
-        //url = thisShop.url;
+        thisShop = appController.getShopById(sid);
+        url = thisShop.url;
 
         myWebView = (WebView) this.findViewById(R.id.webview);
         myWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                //super.onReceivedSslError(view, handler, error);
                 if (webPref.getBoolean(SPK_IGNORE_SSL, false)){
                     handler.proceed();
                 }
