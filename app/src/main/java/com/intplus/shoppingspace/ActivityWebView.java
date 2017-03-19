@@ -41,7 +41,7 @@ public class ActivityWebView extends AppCompatActivity {
     int sid=0;
     AppController appController;
     Shop thisShop;
-    String url = "https://www.snapdeal.com/";
+    String url = "https://www.flipkart.com/";
     Toolbar toolbar;
     AppBarLayout appBarLayout;
     AppBarLayout.LayoutParams params;
@@ -80,6 +80,8 @@ public class ActivityWebView extends AppCompatActivity {
         sid = mIntent.getIntExtra("sid", 0);
         thisShop = appController.getShopById(sid);
         url = thisShop.url;
+        ActionBar actionBar = this.getSupportActionBar();
+        actionBar.setTitle(thisShop.shopName);
 
         myWebView = (WebView) this.findViewById(R.id.webview);
         // Handle ssl error with AlertDialog.

@@ -38,7 +38,7 @@ public class AllShopsListAdapter extends RecyclerView.Adapter<AllShopsListAdapte
         this.onItemClickListner = (OnItemClickListner) this.activity;
         lightGrey = ContextCompat.getColor(this.activity, R.color.lightGrey);
         green = ContextCompat.getColor(this.activity, R.color.colorAccent);
-        System.out.println("Shop" + this.allShops.size());
+        System.out.println("Total Shops : " + this.allShops.size());
     }
 
     @Override
@@ -53,7 +53,6 @@ public class AllShopsListAdapter extends RecyclerView.Adapter<AllShopsListAdapte
     public void onBindViewHolder(ShopListViewHolder holder, int position) {
         String shop_icon_name = this.allShops.get(position).icon;
         String shop_name = this.allShops.get(position).shopName;
-        Boolean isBookmarked = this.allShops.get(position).bookmark;
         holder.shopIcon.setImageResource(this.activity.getResources()
                 .getIdentifier(shop_icon_name, "drawable", AppConstants.PACKAGE));
         holder.shopText.setText(shop_name);

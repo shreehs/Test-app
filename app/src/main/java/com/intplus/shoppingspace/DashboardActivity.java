@@ -57,6 +57,8 @@ public class DashboardActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
 
+        this.getSupportActionBar().setTitle("Dashboard");
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +67,6 @@ public class DashboardActivity extends AppCompatActivity
                 appController.launchAllShopsActivity();
             }
         });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -155,9 +156,8 @@ public class DashboardActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             // Handle the camera action
         } else if (id == R.id.nav_all_shops) {
-            Intent allShopsIntent = new Intent(this, AllShopsActivity.class);
-            startActivity(allShopsIntent);
-            finish();
+            appController.launchAllShopsActivity();
+            this.finish();
 
         } else if (id == R.id.nav_settings) {
 

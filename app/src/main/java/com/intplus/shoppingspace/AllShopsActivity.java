@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.intplus.shoppingspace.adapters.AllShopsListAdapter;
+import com.intplus.shoppingspace.controller.AllShopsController;
 import com.intplus.shoppingspace.controller.AppController;
 import com.intplus.shoppingspace.model.Shop;
 
@@ -28,6 +29,7 @@ public class AllShopsActivity extends AppCompatActivity
     private RecyclerView rListview;
     private LinearLayoutManager linearLayoutManager;
     private AppController appController;
+    private AllShopsController allShopsController;
     private AllShopsListAdapter allShopsListAdapter;
 
     @Override
@@ -44,9 +46,11 @@ public class AllShopsActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.getMenu().getItem(1).setChecked(true); // First item belongs to current activity.
         navigationView.setNavigationItemSelectedListener(this);
 
         appController = new AppController(this);
+        allShopsController = new AllShopsController(this);
         // Grid initialization.
         rListview = (RecyclerView) this.findViewById(R.id.lv_all_shops);
 
@@ -61,7 +65,7 @@ public class AllShopsActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         // Get list of dashboard shops to display.
-        allShops = appController.getDashboardShops();
+        allShops = appController.getAllShops();
         // pass dash board items to GridView.
         allShopsListAdapter = new AllShopsListAdapter(this, allShops);
         rListview.setAdapter(allShopsListAdapter);
@@ -105,18 +109,18 @@ public class AllShopsActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_home) {
+            appController.launchDashboardActivity();
+            this.finish();
+        } else if (id == R.id.nav_all_shops) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+            this.appController.launchAppOnPlayStore();
+        } else if (id == R.id.nav_help) {
+            this.appController.launchHelpActivity();
+        } else if (id == R.id.nav_about) {
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -131,7 +135,7 @@ public class AllShopsActivity extends AppCompatActivity
 
     @Override
     public void onBookmarkToggle(int position, Boolean currentState) {
-
+        allShopsController.updateBookmarkStatus(allShops.get(position), currentState);
     }
 
 }
