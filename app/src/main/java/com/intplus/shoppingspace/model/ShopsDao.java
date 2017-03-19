@@ -87,13 +87,7 @@ public class ShopsDao extends DbContentProvider implements IShopsDao,IShopSchema
 
         for(int i=0;i<shops.size();i++)
         {
-            Log.println(Log.ASSERT,"daadd","shops:"+shops.get(i).getSid());
-            //shops.get(i).getSid();
             setContentValue(shops.get(i));
-            Log.println(Log.ASSERT,"daadd","shops:"+shops.get(i).getUrl());
-            Log.println(Log.ASSERT,"daadd","shops:"+shops.get(i).getIcon());
-            Log.println(Log.ASSERT,"daadd","shops:"+shops.get(i).getShopName());
-            Log.println(Log.ASSERT,"daadd","shops:"+shops.get(i).getBookmark());
         }
 
         try {

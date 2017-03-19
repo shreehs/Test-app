@@ -3,25 +3,25 @@
 		"sid": 1,
 		"title": "Amazon",
 		"bookmark": true,
-		"url": "http://www.amazon.in",
+		"url": "https://www.amazon.in",
 	  	"icon": "amazon"
 	}, {
 		"sid": 2,
 		"title": "Flipkart",
 		"bookmark": true,
-		"url": "http://www.flipkart.com",
+		"url": "https://www.flipkart.com",
 	  	"icon": "flipkart"
 	}, {
 		"sid": 3,
 		"title": "Snapdeal",
-		"bookmark": false,
-		"url": "http://www.snapdeal.com",
+		"bookmark": true,
+		"url": "https://www.snapdeal.com",
 	  	"icon": "snapdeal"
 	}, {
 		"sid": 4,
 		"title": "Paytm",
 		"bookmark": true,
-		"url": "http://www.paytm.com",
+		"url": "https://www.paytm.com",
 	  	"icon": "paytm"
 	}]
 }
