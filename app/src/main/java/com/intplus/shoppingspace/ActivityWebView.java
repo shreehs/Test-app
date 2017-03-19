@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NavUtils;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -16,6 +17,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
@@ -60,9 +63,10 @@ public class ActivityWebView extends AppCompatActivity {
         setSupportActionBar(toolbar);
         appBarLayout = (AppBarLayout) findViewById(R.id.toolbar_layout);
         //toolbarHeight = getActionBarHeight();
-
         params = (AppBarLayout.LayoutParams) toolbar.getLayoutParams();
         // params.setScrollFlags(0);  // clear all scroll flags
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        this.getSupportActionBar().setHomeButtonEnabled(true);
 
         webPref = getApplicationContext().getSharedPreferences("WebPref", 0);
         webPrefEditor = webPref.edit();
@@ -78,6 +82,7 @@ public class ActivityWebView extends AppCompatActivity {
         url = thisShop.url;
 
         myWebView = (WebView) this.findViewById(R.id.webview);
+        // Handle ssl error with AlertDialog.
         myWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
@@ -93,6 +98,31 @@ public class ActivityWebView extends AppCompatActivity {
                 }
             }
         });
+        // Overide the back button
+        myWebView.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if(event.getAction() == KeyEvent.ACTION_DOWN)
+                {
+                    WebView webView = (WebView) v;
+                    switch(keyCode)
+                    {
+                        case KeyEvent.KEYCODE_BACK:
+                            if(webView.canGoBack())
+                            {
+                                Log.d(APPLOG, "web view go back ");
+                                webView.goBack();
+                                return true;
+                            }
+                            break;
+                    }
+                }
+
+                return false;
+            }
+        });
+
         WebSettings settings = myWebView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setLoadsImagesAutomatically(true);
@@ -112,6 +142,17 @@ public class ActivityWebView extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         myWebView.destroy();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private int getActionBarHeight() {
