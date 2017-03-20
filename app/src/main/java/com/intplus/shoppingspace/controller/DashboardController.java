@@ -61,7 +61,8 @@ public class DashboardController extends AppController{
        boolean shopsInsertedFlag=false;
             for(Shop shop:shopsList)
             {
-                 shopsInsertedFlag=shopDatabase.shopsDao.insertShop(shop);
+                Log.d(APPLOG, "json shop icon : "+shop.icon);
+                shopsInsertedFlag=shopDatabase.shopsDao.insertShop(shop);
             }
                 if(shopsInsertedFlag==true)
                 {

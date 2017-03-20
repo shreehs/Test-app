@@ -24,7 +24,7 @@ public class ShoppingDbHelper{
         allShops.add(new Shop(1, "Amazon", Boolean.TRUE, "www.amazon.in", "amazon"));
         allShops.add(new Shop(2, "Flipkart", Boolean.TRUE, "www.flipkart.com", "flipkart"));
         allShops.add(new Shop(3, "Snaldeal", Boolean.FALSE, "www.snapdeal.com", "snapdeal"));
-        allShops.add(new Shop(4, "Paytm", Boolean.TRUE, "www.paytm.com", "myntra"));
+        allShops.add(new Shop(4, "Paytm", Boolean.TRUE, "www.paytm.com", "paytm"));
         return allShops;
     }
 }

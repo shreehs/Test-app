@@ -40,7 +40,9 @@ public class AppController {
         ArrayList<Shop> allShops = this.getAllShops();
         for(int i=0; i<allShops.size(); i++){
             // Check if it is bookmarked shop. Add to dashboard list.
-            dashboardItems.add(allShops.get(i));
+            if (allShops.get(i).bookmark) {
+                dashboardItems.add(allShops.get(i));
+            }
         }
         // Or use filtering query to read selected from db. (check)
         return dashboardItems;
