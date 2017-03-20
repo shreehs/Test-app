@@ -17,5 +17,5 @@ public interface IShopsDao {
     public boolean deleteAllShops();
     public int deleteShop(int sid);
     //Update
-    public int updateShop(int sid,Shop shop);
+    public int updateShop(Shop shop,boolean bookmark);
 }

@@ -20,7 +20,7 @@ public interface IShopSchema {
             + COLUMN_SHOP_NAME
             + " TEXT NOT NULL, "
             + COLUMN_SHOP_BOOKMARK
-            + " TEXT, "
+            + " INTEGER NOT NULL, "
             +COLUMN_SHOP_URL
             +" TEXT, "
             +COLUMN_SHOP_ICON

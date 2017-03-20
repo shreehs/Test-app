@@ -91,7 +91,7 @@ public class AllShopsListAdapter extends RecyclerView.Adapter<AllShopsListAdapte
                 case R.id.iv_star_shopping_list_item:
                     Log.d(APPLOG, "Bookmark toggle");
                     Boolean newBookmarkState = !(allShops.get(position).bookmark);
-                    //toggleBookmark(position, newBookmarkState);
+                    toggleBookmark(position, newBookmarkState);
                     allShops.get(position).bookmark = newBookmarkState;
                     // Show on the view
                     int newBookmarkColor = lightGrey;
@@ -101,7 +101,7 @@ public class AllShopsListAdapter extends RecyclerView.Adapter<AllShopsListAdapte
                     ColorStateList newColorStateList = new ColorStateList(new int[][]{new int[0]}, new int[]{newBookmarkColor});
                     this.shopBookmark.setSupportBackgroundTintList(newColorStateList);
                     // Call the callback implementation to do more actions.
-                    onItemClickListner.onBookmarkToggle(position, newBookmarkState);
+                    onItemClickListner.onBookmarkToggle(position,newBookmarkState);
                     break;
                 case R.id.cv_shopping_list_item:
                     onItemClickListner.onListItemClick(position);
@@ -111,11 +111,11 @@ public class AllShopsListAdapter extends RecyclerView.Adapter<AllShopsListAdapte
         }
     }
 
-    private void toggleBookmark(int position, Boolean newBookmarkState){
+    private void toggleBookmark(int position, boolean newBookmarkState){
     }
 
     public interface OnItemClickListner{
         public void onListItemClick(int position);
-        public void onBookmarkToggle(int position, Boolean currentState);
+        public void onBookmarkToggle(int position, boolean currentState);
     }
 }
