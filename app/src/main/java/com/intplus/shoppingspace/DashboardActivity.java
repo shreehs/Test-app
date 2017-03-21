@@ -1,6 +1,8 @@
 package com.intplus.shoppingspace;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -23,6 +25,7 @@ import com.intplus.shoppingspace.controller.AppController;
 import com.intplus.shoppingspace.controller.DashboardController;
 import com.intplus.shoppingspace.model.Shop;
 import com.intplus.shoppingspace.model.AppPrefHelper;
+import com.intplus.shoppingspace.utils.VersionControl;
 
 import java.util.ArrayList;
 
@@ -83,10 +86,12 @@ public class DashboardActivity extends AppCompatActivity
             Log.d(APPLOG, "It is first run, initializing.. ");
             dashboardController.initialize();
         }
+
         // Check and handle app upgrade. Change of version.
-        if (dashboardController.isChangeOfVersion()){
-            Log.d(APPLOG, "It is a change of version, initializing.. ");
-            dashboardController.handleVersionChange();
+        VersionControl versionControl = dashboardController.checkVersion();
+        if (versionControl.isVersionChange){
+            Log.d(APPLOG, "It is a change of version, handle ");
+            dashboardController.handleVersionChange(versionControl);
         }
 
         // Launch the view stub.
