@@ -3,13 +3,13 @@
 		"sid": 1,
 		"title": "Amazon",
 		"bookmark": true,
-		"url": "https://www.amazon.in",
+		"url": "http://www.amazon.in/?tag=neti0f-21",
 	  	"icon": "amazon"
 	}, {
 		"sid": 2,
 		"title": "Flipkart",
 		"bookmark": true,
-		"url": "https://www.flipkart.com",
+		"url": "http://dl.flipkart.com/dl/?affid=shsmysore",
 	  	"icon": "flipkart"
 	}, {
 		"sid": 3,
@@ -23,5 +23,23 @@
 		"bookmark": true,
 		"url": "https://www.paytm.com",
 	  	"icon": "paytm"
+	}, {
+		"sid": 5,
+		"title": "Myntra",
+		"bookmark": true,
+		"url": "http://www.myntra.com/",
+		"icon": "myntra"
+	}, {
+		"sid": 6,
+		"title": "Jabong",
+		"bookmark": false,
+		"url": "http://www.jabong.com/",
+		"icon": "jabong"
+	}, {
+		"sid": 7,
+		"title": "Shopclues",
+		"bookmark": false,
+		"url": "http://www.shopclues.com/",
+		"icon": "shopclues"
 	}]
 }

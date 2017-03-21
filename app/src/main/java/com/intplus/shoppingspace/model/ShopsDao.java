@@ -70,7 +70,6 @@ public class ShopsDao extends DbContentProvider implements IShopsDao,IShopSchema
     //Insert shop into database
     @Override
     public boolean insertShop(Shop shop) {
-
         // set values
         setContentValue(shop);
         try {
@@ -127,19 +126,19 @@ public class ShopsDao extends DbContentProvider implements IShopsDao,IShopSchema
 
     //Update shop.
     @Override
-    public int updateShop(int sid,Shop shop)
+    public int updateShop(Shop shop, boolean bookmark)
     {
+        int i=bookmark?1:0;
+        System.out.println("i : "+i);
         //String tableName, ContentValues values,String selection, String[] selectionArgs
         ContentValues contentValues=new ContentValues();
-        contentValues.put(COLUMN_SHOP_NAME,shop.getShopName());
-        contentValues.put(COLUMN_SHOP_BOOKMARK,shop.getBookmark());
-        contentValues.put(COLUMN_SHOP_URL,shop.getUrl());
-        contentValues.put(COLUMN_SHOP_ICON,shop.getIcon());
-
-        final String selectionArgs[] = { String.valueOf(sid) };
-        final String selection =IShopSchema.COLUMN_SHOP_ID+" = ?";
-        int noOfRowsUpdated=super.update(SHOP_TABLE,contentValues,selection,selectionArgs);
+        contentValues.put(COLUMN_SHOP_BOOKMARK,i);
+        String selectionArgs[] = {String.valueOf(shop.getSid())};
+        String selection = IShopSchema.COLUMN_SHOP_ID+" = ?";
+        int noOfRowsUpdated=super.update(SHOP_TABLE, contentValues, selection, selectionArgs);
+        //super.rawQuery()
         return noOfRowsUpdated;
+
     }
 
     //Cursor object.
@@ -167,7 +166,7 @@ public class ShopsDao extends DbContentProvider implements IShopsDao,IShopSchema
             if (cursor.getColumnIndex(COLUMN_SHOP_BOOKMARK) != -1) {
                 bookmarkIndex = cursor.getColumnIndexOrThrow(
                         COLUMN_SHOP_BOOKMARK);
-                shop.bookmark = cursor.isNull(bookmarkIndex);
+                shop.bookmark = cursor.getInt(bookmarkIndex)==1;
             }
 
             if (cursor.getColumnIndex(COLUMN_SHOP_URL) != -1) {
@@ -190,7 +189,7 @@ public class ShopsDao extends DbContentProvider implements IShopsDao,IShopSchema
         initialValues = new ContentValues();
         initialValues.put(COLUMN_SHOP_ID, shop.sid);
         initialValues.put(COLUMN_SHOP_NAME, shop.shopName);
-        initialValues.put(COLUMN_SHOP_BOOKMARK, shop.bookmark);
+        initialValues.put(COLUMN_SHOP_BOOKMARK,shop.bookmark);
         initialValues.put(COLUMN_SHOP_URL, shop.url);
         initialValues.put(COLUMN_SHOP_ICON, shop.icon);
     }

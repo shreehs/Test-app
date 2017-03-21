@@ -134,7 +134,7 @@ public class AllShopsActivity extends AppCompatActivity
     }
 
     @Override
-    public void onBookmarkToggle(int position, Boolean currentState) {
+    public void onBookmarkToggle(int position, boolean currentState) {
         allShopsController.updateBookmarkStatus(allShops.get(position), currentState);
     }
 

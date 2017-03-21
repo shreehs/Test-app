@@ -65,5 +65,9 @@ public abstract class DbContentProvider {
     public Cursor rawQuery(String sql, String[] selectionArgs) {
         return mDb.rawQuery(sql, selectionArgs);
     }
+
+    public void rawQuery(String sql) {
+        mDb.execSQL(sql);
+    }
 }
 
