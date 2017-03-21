@@ -36,6 +36,7 @@ public class AppController {
         ArrayList<Shop> dashboardItems = new ArrayList<>();
         ArrayList<Shop> allShops = this.getAllShops();
         for (int i = 0; i < allShops.size(); i++) {
+            Log.d(APPLOG,"shop name ="+allShops.get(i).getShopName());
             Log.d(APPLOG,"bookmark="+allShops.get(i).getBookmark());
             // Check if it is bookmarked shop. Add to dashboard list.
             if(allShops.get(i).getBookmark())

@@ -126,16 +126,19 @@ public class ShopsDao extends DbContentProvider implements IShopsDao,IShopSchema
 
     //Update shop.
     @Override
-    public int updateShop(Shop shop,boolean bookmark)
+    public int updateShop(Shop shop, boolean bookmark)
     {
         int i=bookmark?1:0;
+        System.out.println("i : "+i);
         //String tableName, ContentValues values,String selection, String[] selectionArgs
         ContentValues contentValues=new ContentValues();
         contentValues.put(COLUMN_SHOP_BOOKMARK,i);
-        final String selectionArgs[] = { String.valueOf(shop.getSid())};
-        final String selection =IShopSchema.COLUMN_SHOP_ID+" = ?";
-        int noOfRowsUpdated=super.update(SHOP_TABLE,contentValues,selection,selectionArgs);
+        String selectionArgs[] = {String.valueOf(shop.getSid())};
+        String selection = IShopSchema.COLUMN_SHOP_ID+" = ?";
+        int noOfRowsUpdated=super.update(SHOP_TABLE, contentValues, selection, selectionArgs);
+        //super.rawQuery()
         return noOfRowsUpdated;
+
     }
 
     //Cursor object.
@@ -163,7 +166,7 @@ public class ShopsDao extends DbContentProvider implements IShopsDao,IShopSchema
             if (cursor.getColumnIndex(COLUMN_SHOP_BOOKMARK) != -1) {
                 bookmarkIndex = cursor.getColumnIndexOrThrow(
                         COLUMN_SHOP_BOOKMARK);
-                shop.bookmark = cursor.isNull(bookmarkIndex);
+                shop.bookmark = cursor.getInt(bookmarkIndex)==1;
             }
 
             if (cursor.getColumnIndex(COLUMN_SHOP_URL) != -1) {

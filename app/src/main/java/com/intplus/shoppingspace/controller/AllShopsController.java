@@ -31,6 +31,7 @@ public class AllShopsController extends AppController {
      */
     public void updateBookmarkStatus(Shop shop, boolean bookmarkStatus) {
         Log.d(APPLOG,"cnewbookmark="+bookmarkStatus);
-        shopDatabase.shopsDao.updateShop(shop,bookmarkStatus);
+        int rows = shopDatabase.shopsDao.updateShop(shop,bookmarkStatus);
+        System.out.println("updated : "+rows);
     }
 }
