@@ -5,6 +5,7 @@ import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import com.intplus.shoppingspace.app.AppConstants;
 import com.intplus.shoppingspace.model.Shop;
 
 import java.util.ArrayList;
+
+import static com.intplus.shoppingspace.app.AppConstants.APPLOG;
 
 /**
  * Created by harshas on 12/29/2016.

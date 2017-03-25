@@ -39,9 +39,7 @@ public class AppController {
             Log.d(APPLOG,"shop name ="+allShops.get(i).getShopName());
             Log.d(APPLOG,"bookmark="+allShops.get(i).getBookmark());
             // Check if it is bookmarked shop. Add to dashboard list.
-            if(allShops.get(i).getBookmark())
-            {
-                Log.d(APPLOG,"bookmark="+allShops.get(i).getBookmark());
+            if (allShops.get(i).getBookmark()) {
                 dashboardItems.add(allShops.get(i));
             }
         }
