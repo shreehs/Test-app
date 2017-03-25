@@ -6,6 +6,7 @@ import com.intplus.shoppingspace.AllShopsActivity;
 import com.intplus.shoppingspace.DashboardActivity;
 import com.intplus.shoppingspace.HelpActivity;
 import com.intplus.shoppingspace.app.AppConstants;
+import com.intplus.shoppingspace.commons.CommonUtils;
 import com.intplus.shoppingspace.commons.PlayStore;
 import com.intplus.shoppingspace.model.Shop;
 import com.intplus.shoppingspace.model.ShopDatabase;
@@ -20,9 +21,11 @@ public class AppController {
     private Activity activity;
     public static ShopDatabase shopDatabase;
     private static final String APPLOG = "Shop";
+    private CommonUtils commonUtils;
 
     public AppController(Activity activity) {
         this.activity = activity;
+        commonUtils = new CommonUtils();
         shopDatabase = new ShopDatabase(this.activity);
         shopDatabase.open();
     }
@@ -58,6 +61,11 @@ public class AppController {
             Log.e(APPLOG, "Db is closed");
         }
         return currentShop;
+    }
+
+    // Share app using other apps
+    public void shareApp(){
+        this.commonUtils.shareMessage(this.activity);
     }
 
     // new screen launchers.

@@ -1,5 +1,8 @@
 package com.intplus.shoppingspace.commons;
 
+import android.app.Activity;
+import android.content.Intent;
+
 import com.intplus.shoppingspace.model.Shop;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,5 +38,15 @@ public class CommonUtils {
             shopsList.add(shop);
         }
         return shopsList;
+    }
+
+    public void shareMessage(Activity activity){
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        String shareBody = "Download Shopping Space!.\nA container for all your online shopping.\n" +
+                "https://play.google.com/store/apps/details?id=com.intplus.shoppingspace&hl=en";
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Shopping Space");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        activity.startActivity(Intent.createChooser(sharingIntent, "Share App via"));
     }
 }
