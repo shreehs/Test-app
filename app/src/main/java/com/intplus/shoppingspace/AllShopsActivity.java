@@ -117,7 +117,7 @@ public class AllShopsActivity extends AppCompatActivity
         } else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_share) {
-            this.appController.launchAppOnPlayStore();
+            this.appController.shareApp();
         } else if (id == R.id.nav_help) {
             this.appController.launchHelpActivity();
         } else if (id == R.id.nav_about) {
