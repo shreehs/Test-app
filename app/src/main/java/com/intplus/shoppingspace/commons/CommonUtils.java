@@ -29,12 +29,14 @@ public class CommonUtils {
             boolean bookmark=Boolean.parseBoolean(shopObject.getString("bookmark").toString());
             String shopUrl=shopObject.getString("url").toString();
             String shopIcon=shopObject.getString("icon").toString();
+            String shopPackage=shopObject.getString("package").toString();
             shop=new Shop();
             shop.setSid(shopId);
             shop.setShopName(shopName);
             shop.setBookmark(bookmark);
             shop.setUrl(shopUrl);
             shop.setIcon(shopIcon);
+            shop.setPackage(shopPackage);
             shopsList.add(shop);
         }
         return shopsList;

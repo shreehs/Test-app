@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
@@ -21,5 +22,8 @@ public class HelpActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
+
+        WebView helpWebView = (WebView) findViewById(R.id.webView_help);
+        helpWebView.loadUrl("file:///android_asset/help.html");
     }
 }

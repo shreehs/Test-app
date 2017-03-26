@@ -4,42 +4,49 @@
 		"title": "Amazon",
 		"bookmark": true,
 		"url": "http://www.amazon.in/?tag=neti0f-21",
-	  	"icon": "amazon"
+	  	"icon": "amazon",
+		"package": "in.amazon.mShop.android.shopping"
 	}, {
 		"sid": 2,
 		"title": "Flipkart",
 		"bookmark": true,
 		"url": "http://dl.flipkart.com/dl/?affid=shsmysore",
-	  	"icon": "flipkart"
+	  	"icon": "flipkart",
+		"package": "com.flipkart.android"
 	}, {
 		"sid": 3,
 		"title": "Snapdeal",
 		"bookmark": true,
 		"url": "https://www.snapdeal.com",
-	  	"icon": "snapdeal"
+	  	"icon": "snapdeal",
+		"package": "com.snapdeal.main"
 	}, {
 		"sid": 4,
 		"title": "Paytm",
 		"bookmark": true,
 		"url": "https://www.paytm.com",
-	  	"icon": "paytm"
+	  	"icon": "paytm",
+		"package": "net.one97.paytm"
 	}, {
 		"sid": 5,
 		"title": "Myntra",
 		"bookmark": true,
 		"url": "http://www.myntra.com/",
-		"icon": "myntra"
+		"icon": "myntra",
+		"package": "com.myntra.android"
 	}, {
 		"sid": 6,
 		"title": "Jabong",
 		"bookmark": false,
 		"url": "http://www.jabong.com/",
-		"icon": "jabong"
+		"icon": "jabong",
+		"package": "com.jabong.android"
 	}, {
 		"sid": 7,
 		"title": "Shopclues",
 		"bookmark": false,
 		"url": "http://www.shopclues.com/",
-		"icon": "shopclues"
+		"icon": "shopclues",
+		"package": "com.shopclues"
 	}]
 }

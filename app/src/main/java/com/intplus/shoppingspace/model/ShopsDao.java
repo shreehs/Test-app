@@ -152,6 +152,7 @@ public class ShopsDao extends DbContentProvider implements IShopsDao,IShopSchema
         int bookmarkIndex;
         int urlIndex;
         int iconIndex;
+        int packageNameIndex;
 
         if (cursor != null) {
             if (cursor.getColumnIndex(COLUMN_SHOP_ID) != -1) {
@@ -174,11 +175,16 @@ public class ShopsDao extends DbContentProvider implements IShopsDao,IShopSchema
                         COLUMN_SHOP_URL);
                 shop.url = cursor.getString(urlIndex);
             }
-
             if (cursor.getColumnIndex(COLUMN_SHOP_ICON) != -1) {
                 iconIndex = cursor.getColumnIndexOrThrow(
                         COLUMN_SHOP_ICON);
                 shop.icon = cursor.getString(iconIndex);
+            }
+
+            if (cursor.getColumnIndex(COLUMN_SHOP_PACKAGE) != -1) {
+                packageNameIndex = cursor.getColumnIndexOrThrow(
+                        COLUMN_SHOP_PACKAGE);
+                shop.packageName = cursor.getString(packageNameIndex);
             }
         }
         return shop;
@@ -192,6 +198,7 @@ public class ShopsDao extends DbContentProvider implements IShopsDao,IShopSchema
         initialValues.put(COLUMN_SHOP_BOOKMARK,shop.bookmark);
         initialValues.put(COLUMN_SHOP_URL, shop.url);
         initialValues.put(COLUMN_SHOP_ICON, shop.icon);
+        initialValues.put(COLUMN_SHOP_PACKAGE, shop.getPackage());
     }
 
     //Returning content values.

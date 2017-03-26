@@ -1,8 +1,11 @@
 package com.intplus.shoppingspace;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 
 import com.intplus.shoppingspace.adapters.DashboardGridAdapter;
@@ -28,6 +32,7 @@ import com.intplus.shoppingspace.model.AppPrefHelper;
 import com.intplus.shoppingspace.utils.VersionControl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.intplus.shoppingspace.app.AppConstants.APPLOG;
 
@@ -66,8 +71,12 @@ public class DashboardActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Snackbar.make(view, "Goto all apps activity", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                Snackbar.make(view, "Goto all apps activity", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 appController.launchAllShopsActivity();
+                /*Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("http://www.shopclues.com/"));
+                intent.setPackage("com.shopclues");
+                startActivity(intent);*/
+                //ActivityNotFoundException
             }
         });
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -165,12 +174,13 @@ public class DashboardActivity extends AppCompatActivity
             this.finish();
 
         } else if (id == R.id.nav_settings) {
-
+            this.appController.launchOptionsActivity();
         } else if (id == R.id.nav_share) {
             this.appController.shareApp();
         } else if (id == R.id.nav_help) {
             this.appController.launchHelpActivity();
         } else if (id == R.id.nav_about) {
+            this.appController.launchAboutActivity();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -182,9 +192,26 @@ public class DashboardActivity extends AppCompatActivity
     public void onListItemClick(int position) {
         int sid = this.dashBoardShops.get(position).sid;
         System.out.println("Shop Dashboard click SID : "+sid);
-        // pass sid to web view activity.
-        Intent webViewIntent = new Intent(this, ActivityWebView.class);
-        webViewIntent.putExtra("sid", sid);
-        startActivity(webViewIntent);
+        Boolean appDelegate = appController.getAppDelegateStatus();
+        if (appDelegate){
+            System.out.println("> "+"Trying to delegate..");
+            try{
+                Intent intent = new Intent(Intent.ACTION_VIEW,
+                                    Uri.parse(this.dashBoardShops.get(position).getUrl()));
+                intent.setPackage(this.dashBoardShops.get(position).getPackage());
+                startActivity(intent);
+            }
+            catch (ActivityNotFoundException e){
+                appDelegate = false;
+            }
+        }
+        if (!appDelegate){
+            System.out.println(">  Opening in webview");
+            // pass sid to web view activity.
+            Intent webViewIntent = new Intent(this, ActivityWebView.class);
+            webViewIntent.putExtra("sid", sid);
+            startActivity(webViewIntent);
+        }
+
     }
 }

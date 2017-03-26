@@ -20,6 +20,7 @@ public class Shop {
     public Boolean bookmark;
     public String url;
     public String icon;
+    public String packageName;
 
     public Shop(){
     }
@@ -64,11 +65,20 @@ public class Shop {
         this.icon = icon;
     }
 
-    public Shop(int sid, String shopName, Boolean bookmark, String url, String icon){
+    public String getPackage() {
+        return packageName;
+    }
+
+    public void setPackage(String packageName) {
+        this.packageName = packageName;
+    }
+
+    public Shop(int sid, String shopName, Boolean bookmark, String url, String icon, String packageName){
         this.sid = sid;
         this.shopName = shopName;
         this.bookmark = bookmark;
         this.url = url;
         this.icon = icon;
+        this.packageName = packageName;
     }
 }

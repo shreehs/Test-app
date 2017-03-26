@@ -11,6 +11,7 @@ public interface IShopSchema {
     String COLUMN_SHOP_BOOKMARK = "SHOP_BOOKMARK";
     String COLUMN_SHOP_URL = "SHOP_URL";
     String COLUMN_SHOP_ICON = "SHOP_ICON";
+    String COLUMN_SHOP_PACKAGE = "SHOP_PACKAGE";
 
     String SHOP_TABLE_CREATE = "CREATE TABLE IF NOT EXISTS "
             + SHOP_TABLE
@@ -24,9 +25,11 @@ public interface IShopSchema {
             +COLUMN_SHOP_URL
             +" TEXT, "
             +COLUMN_SHOP_ICON
+            +" TEXT, "
+            +COLUMN_SHOP_PACKAGE
             +" TEXT "
             + "  ) ";
 
     String[] SHOP_COLUMNS = new String[] { COLUMN_SHOP_ID,
-            COLUMN_SHOP_NAME, COLUMN_SHOP_BOOKMARK,COLUMN_SHOP_URL,COLUMN_SHOP_ICON};
+            COLUMN_SHOP_NAME, COLUMN_SHOP_BOOKMARK,COLUMN_SHOP_URL,COLUMN_SHOP_ICON, COLUMN_SHOP_PACKAGE};
 }

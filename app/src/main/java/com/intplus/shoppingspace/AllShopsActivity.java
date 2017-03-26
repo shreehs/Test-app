@@ -26,6 +26,7 @@ public class AllShopsActivity extends AppCompatActivity
     // Data
     ArrayList<Shop> allShops = new ArrayList<>();
     // Others
+    private NavigationView navigationView;
     private RecyclerView rListview;
     private LinearLayoutManager linearLayoutManager;
     private AppController appController;
@@ -45,8 +46,8 @@ public class AllShopsActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.getMenu().getItem(1).setChecked(true); // First item belongs to current activity.
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        //navigationView.getMenu().getItem(1).setChecked(true); // First item belongs to current activity.
         navigationView.setNavigationItemSelectedListener(this);
 
         appController = new AppController(this);
@@ -64,6 +65,7 @@ public class AllShopsActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        navigationView.setCheckedItem(R.id.nav_all_shops);
         // Get list of dashboard shops to display.
         allShops = appController.getAllShops();
         // pass dash board items to GridView.
@@ -115,12 +117,13 @@ public class AllShopsActivity extends AppCompatActivity
         } else if (id == R.id.nav_all_shops) {
 
         } else if (id == R.id.nav_settings) {
-
+            this.appController.launchOptionsActivity();
         } else if (id == R.id.nav_share) {
             this.appController.shareApp();
         } else if (id == R.id.nav_help) {
             this.appController.launchHelpActivity();
         } else if (id == R.id.nav_about) {
+            this.appController.launchHelpActivity();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

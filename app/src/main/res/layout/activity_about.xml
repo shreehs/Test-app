@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_help2"
+    android:id="@+id/activity_about"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    tools:context="com.intplus.shoppingspace.HelpActivity">
+    tools:context="com.intplus.shoppingspace.AboutActivity">
 
     <LinearLayout
         android:id="@+id/mytoolbar"
@@ -15,7 +13,7 @@
         android:background="@color/colorPrimaryDark"
         android:orientation="vertical">
         <WebView
-            android:id="@+id/webView_help"
+            android:id="@+id/webView_about"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         </WebView>
